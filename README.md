@@ -9,6 +9,9 @@ Por el momento comenzaremos con lo principal. El CSS ya esta echo. Te recomendam
 
 Trabajaremos en la carpeta /src. Ahi tendremos nuestro /components. Deberiamos seguir el siguiente flujo recomendado:
 
+Recuerden hacer npm install para descargar las dependencias necesarias. Luego necesitaran hacer npm start para revisar su progreso en tiempo real con el navegador. Cualquier duda me contactan
+
+
 # App.js
 
 Esta es nuestra ruta principal. Aquí tendremos que definir nuestras rutas(el router lo debemos definir en el index) para con las siguientes rutas:
