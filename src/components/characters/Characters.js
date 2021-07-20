@@ -14,26 +14,46 @@ function Characters() {
     con un nombre o un apellido, y en base a eso la api realizará el filtrado.
     En caso de no poner nada en la query, la api traerá a todos los personajes.
   */
+  const [data,setdata]=useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
+
+  useEffect(() => {
+    fetch(`https://breakingbadapi.com/api/characters?name=`)
+      .then(r => r.json())
+      .then(data => {
+        setdata(data)
+      });
+  }, []); 
+
+  useEffect(() =>{                          //chequeo de coincidencias
+    const results = data.filter(person =>
+      person.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+    );
+    setSearchResults(results);
+  },[searchTerm])       //solo se ejecuta cuando searchterm cambie
+
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value)
+  }
   return (
     <div className="Characters">
       <h1>List of Characters</h1>
-
-      {/*
-        Aquí vamos a definir el buscador de personajes.
-        Debemos crear una SearchBar que contenga un form controlado
-      */}
-
-      <ul className="Characters__list">
-        {/*El loading le va a dar un efecto de carga hasta que la peticion de la API llegue, no tocar!.*/}
-        {isLoading ? (
-          <Spinner />
-        ) : (
+      <input 
+        placeholder='Search Characters'
+        type='text'
+        value={searchTerm}
+        onChange={handleChange}
+      >
+      </input>
+      <div className="Characters__list">
           {
-            /*Aquí vamos a mostrar la lista de personajes.*/
+            searchResults.map(person => (
+            <div className='personName'>{person.name}</div>
+            ))
           }
-        )}
-      </ul>
+      </div>
     </div>
   );
 }
